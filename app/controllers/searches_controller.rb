@@ -1,13 +1,16 @@
 class SearchesController < ApplicationController
   before_action :authenticate_user!
-  before_action :search
 
   def search
-    @q = User.ransack(params[:q])
-  end
+    @model = params[:model]
+    @word = params[:word]
+    @method = params[:method]
 
-  def result
-    @users = @q.result(distinct: true)
+    if @model == 'user'
+			@q = User.search_for(@word, @method)
+		else
+			@q = Book.search_for(@word, @method)
+    end
   end
 
 end

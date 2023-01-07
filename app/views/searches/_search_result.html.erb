@@ -1,0 +1,10 @@
+<% if @model == 'user' %>
+	<h3>Users search for "<%= @word %>"</h3>
+  <%= render 'users/index', users: @q %>
+<% elsif @model == 'book' %>
+	<h3>Books search for "<%= @word %>"</h3>
+  <%= render 'books/index', books: @q %>
+<% else %>
+  <!--検索がヒットしなかった場合-->
+  <p>検索結果はありません</p>
+<% end %>

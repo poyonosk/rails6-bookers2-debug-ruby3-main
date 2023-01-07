@@ -18,6 +18,18 @@ class User < ApplicationRecord
     (profile_image.attached?) ? profile_image : 'no_image.jpg'
   end
 
+  def self.search_for(content, method)
+    if method == 'perfect'
+      User.where(name: content)
+    elsif method == 'forward'
+      User.where('name LIKE ?', content + '%')
+    elsif method == 'backward'
+      User.where('name LIKE ?', '%' + content)
+    else
+      User.where('name LIKE ?', '%' + content + '%')
+    end
+  end
+
   has_many :follows, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :follower, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
 
